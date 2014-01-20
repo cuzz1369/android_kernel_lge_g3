@@ -431,7 +431,10 @@ static void cpufreq_interactive_timer(unsigned long data)
 	pcpu->prev_load = cpu_load;
 	boosted = boost_val || now < boostpulse_endtime;
 
+<<<<<<< HEAD
 	// HACK HACK HACK BEGIN
+=======
+>>>>>>> 138c784... cpufreq: intelliactive: initial coding and introduction!
 	if (counter < 5) {
 		counter++;
 		if (counter > 2) {
@@ -1431,12 +1434,21 @@ static int cpufreq_governor_intelliactive(struct cpufreq_policy *policy,
 		}
 
 		if (--active_count > 0) {
+<<<<<<< HEAD
 			if (!policy->cpu)
 				input_unregister_handler(&interactive_input_handler);
+=======
+>>>>>>> 138c784... cpufreq: intelliactive: initial coding and introduction!
 			mutex_unlock(&gov_lock);
 			return 0;
 		}
 
+<<<<<<< HEAD
+=======
+		if (!policy->cpu)
+			input_unregister_handler(&interactive_input_handler);
+
+>>>>>>> 138c784... cpufreq: intelliactive: initial coding and introduction!
 		cpufreq_unregister_notifier(
 			&cpufreq_notifier_block, CPUFREQ_TRANSITION_NOTIFIER);
 		idle_notifier_unregister(&cpufreq_interactive_idle_nb);

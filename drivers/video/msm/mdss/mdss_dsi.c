@@ -38,7 +38,6 @@ static unsigned char *mdss_dsi_base;
 extern struct mdss_panel_data *pdata_base;
 #endif
 static int mdss_dsi_use_vdd_supply = 1;
-extern struct mdss_panel_data *cmds_panel_data;
 
 static int mdss_dsi_regulator_init(struct platform_device *pdev)
 {
@@ -74,8 +73,6 @@ static int mdss_dsi_panel_power_on(struct mdss_panel_data *pdata, int enable)
 	ctrl_pdata = container_of(pdata, struct mdss_dsi_ctrl_pdata,
 				panel_data);
 	pr_debug("%s: enable=%d\n", __func__, enable);
-
-	cmds_panel_data = pdata;
 
 	if (enable) {
 #ifdef CONFIG_MACH_LGE

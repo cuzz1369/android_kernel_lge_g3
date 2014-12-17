@@ -27,8 +27,6 @@
 
 #define DT_CMD_HDR 6
 
-#include "mdss_mdp.h"
-
 #ifdef CONFIG_MACH_LGE
 extern struct platform_device *of_find_device_by_node(struct device_node *np);
 static struct dsi_panel_cmds lge_ief_on_cmds;
@@ -43,7 +41,6 @@ extern int num_cmds;
 extern struct dsi_cmd_desc *tun_dsi_panel_on_cmds;
 static int num_of_on_cmds;
 #endif
-#define DT_CMD_HDR 6
 
 #ifdef CONFIG_MFD_TPS65132
 extern int tps65132_regulate_voltage(int on, int mode);
@@ -62,8 +59,6 @@ extern void lm3697_lcd_backlight_set_level(int level);
 extern void lm3631_lcd_backlight_set_level(int level);
 #endif
 #endif
-
-static struct mdss_dsi_phy_ctrl phy_params;
 
 void mdss_dsi_panel_pwm_cfg(struct mdss_dsi_ctrl_pdata *ctrl)
 {
@@ -542,7 +537,6 @@ static int mdss_dsi_panel_on(struct mdss_panel_data *pdata)
 	pr_debug("%s: ctrl=%p ndx=%d\n", __func__, ctrl, ctrl->ndx);
 
 	if (ctrl->on_cmds.cmd_cnt)
-
 #ifdef CONFIG_LGE_LCD_TUNING
 	{
 		num_of_on_cmds = num_cmds;
@@ -553,10 +547,6 @@ static int mdss_dsi_panel_on(struct mdss_panel_data *pdata)
 #else
 		mdss_dsi_panel_cmds_send(ctrl, &ctrl->on_cmds);
 #endif
-
-	if (local_pdata->on_cmds.cmd_cnt)
-		mdss_dsi_panel_cmds_send(ctrl, &local_pdata->on_cmds);
-		mdss_dsi_panel_cmds_send(ctrl, &ctrl->on_cmds);
 
 	pr_debug("%s:\n", __func__);
 	return 0;
@@ -1373,39 +1363,5 @@ int mdss_dsi_panel_init(struct device_node *node,
 	rc = device_create_file(&ctrl_pdev->dev, &dev_attr_ief_on_off);
 #endif
 	return 0;
-
-static int __devinit mdss_dsi_panel_probe(struct platform_device *pdev)
-{
-	int rc = 0;
-	static struct mdss_panel_common_pdata vendor_pdata;
-	static const char *panel_name;
-
-	pr_debug("%s:%d, debug info id=%d", __func__, __LINE__, pdev->id);
-	if (!pdev->dev.of_node)
-		return -ENODEV;
-
-	panel_name = of_get_property(pdev->dev.of_node, "label", NULL);
-	if (!panel_name)
-		pr_info("%s:%d, panel name not specified\n",
-						__func__, __LINE__);
-	else
-		pr_info("%s: Panel Name = %s\n", __func__, panel_name);
-
-	rc = mdss_panel_parse_dt(pdev, &vendor_pdata);
-	if (rc)
-		return rc;
-
-	vendor_pdata.on = mdss_dsi_panel_on;
-	vendor_pdata.off = mdss_dsi_panel_off;
-	vendor_pdata.bl_fnc = mdss_dsi_panel_bl_ctrl;
-
-	rc = dsi_panel_device_register(pdev, &vendor_pdata);
-	if (rc)
-		return rc;
-
-#ifdef CONFIG_DEBUG_FS
-	debug_fs_init(&vendor_pdata);
-#endif
-
-	return 0;
 }
+

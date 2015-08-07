@@ -109,12 +109,6 @@ config CPU_FREQ_DEFAULT_GOV_INTERACTIVE
 	  loading your cpufreq low-level hardware driver, using the
 	  'interactive' governor for latency-sensitive workloads.
 
-config CPU_FREQ_DEFAULT_GOV_DANCEDANCE
-            bool "dancedance"
-            select CPU_FREQ_GOV_DANCEDANCE
-            help
-              Use the CPUFreq governor 'dancedance' as default.
-
 config CPU_FREQ_DEFAULT_GOV_LIONHEART
             bool "lionheart"
             select CPU_FREQ_GOV_LIONHEART
@@ -305,13 +299,6 @@ config CPU_FREQ_GOV_IMPULSE
 	  designed for optimized balance between power and performance.
 
 	  If in doubt, say N.
-
-config CPU_FREQ_GOV_DANCEDANCE
-           tristate "'dancedance' cpufreq governor"
-           depends on CPU_FREQ
-           help
-             dancedance' - a "smart" optimized governor!
-             If in doubt, say N.
 
 config CPU_FREQ_GOV_LIONHEART
            tristate "'lionheart' cpufreq governor"

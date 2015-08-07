@@ -121,11 +121,6 @@ config CPU_FREQ_DEFAULT_GOV_SMARTMAX
             help
               Use the CPUFreq governor 'smartmax' as default.
 
-config CPU_FREQ_DEFAULT_GOV_PEGASUSQ
-	bool "pegasusq"
-	select CPU_FREQ_GOV_PEGASUSQ
-	help
-	  Use the CPUFreq governor 'pegasusq' as default.
 config CPU_FREQ_DEFAULT_GOV_INTELLIMM
         bool "intelliminmax"
         select CPU_FREQ_GOV_INTELLIMM
@@ -344,9 +339,6 @@ config CPU_FREQ_GOV_SMARTMAX
            help
              smartmax' - a "smart" optimized governor!
              If in doubt, say N.
-
-config CPU_FREQ_GOV_PEGASUSQ
-	tristate "'pegasusq' cpufreq policy governor"
 
 config CPU_FREQ_GOV_HYPER
 	tristate "'hyper' cpufreq governor"
